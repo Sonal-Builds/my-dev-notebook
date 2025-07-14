@@ -75,3 +75,58 @@ let a = 1, b = 2;
 [a, b] = [b, a];
 console.log(a, b); // 2, 1
 ```
+
+## 🔍 Nested Destructuring in JavaScript
+Nested destructuring lets you extract deeply nested values from objects and arrays in a concise way, without needing multiple steps or temporary variables.
+
+✅ 1. Nested Object Destructuring
+```javascript
+const user = {
+  name: "Alice",
+  address: {
+    city: "New York",
+    zip: 10001
+  }
+};
+
+const { name, address: { city, zip } } = user;
+
+console.log(name); // Alice
+console.log(city); // New York
+console.log(zip);  // 10001
+```
+🔸 You extract city and zip directly from the nested address object.
+🔸 Note: address itself is not declared unless explicitly written.
+
+✅ 2. Nested Array Destructuring
+```javascript
+const colors = ["red", ["green", "blue"]];
+
+const [primary, [secondary, tertiary]] = colors;
+
+console.log(primary);   // red
+console.log(secondary); // green
+console.log(tertiary);  // blue
+```
+🔸 Great for working with APIs that return nested arrays (like matrix data or grid coordinates).
+
+✅ 3. Combined Object + Array Nesting
+```javascript
+const team = {
+  manager: "Bob",
+  members: [
+    { name: "Alice", role: "Frontend" },
+    { name: "Eve", role: "Backend" }
+  ]
+};
+
+const {
+  members: [
+    { name: firstName },
+    { role: secondRole }
+  ]
+} = team;
+
+console.log(firstName);   // Alice
+console.log(secondRole);  // Backend
+```

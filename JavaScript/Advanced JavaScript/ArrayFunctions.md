@@ -1,31 +1,104 @@
 ## 🔸 High-Order Array Methods (🔥 Used in FAANG Interviews)
-✅ forEach()
-Used for iteration (no return value).
+🔁 forEach() — Loop through each element of an array
+📌 Key Characteristics:
+Iterates over elements in an array, in order
+
+Executes a callback function for each element
+
+Does NOT return anything (always returns undefined)
+
+Does NOT mutate the original array (unless done inside the callback)
+
+Can’t be break/return/continue-ed like a for loop
+```javascript
+array.forEach(function(currentValue, index, array) {
+  // your code
+}, thisArg)
+```
+| Parameter      | Description                                       |
+| -------------- | ------------------------------------------------- |
+| `currentValue` | The current element being processed               |
+| `index`        | (Optional) Index of the current element           |
+| `array`        | (Optional) The original array                     |
+| `thisArg`      | (Optional) Value to use as `this` inside callback |
 
 ```javascript
 [1, 2, 3].forEach(num => console.log(num));
 ```
-✅ map()
-Returns a new array after transforming each element.
+🚫 Can’t break/return early:
+```javascript
+[1, 2, 3, 4].forEach(num => {
+  if (num === 3) return;  // Only exits this iteration, not the loop
+  console.log(num);
+});
+// Output: 1, 2, 4
+```
+🗺️ map() — “Transform each element into something new”
+📌 Key Characteristics:
+Creates a new array
+
+Applies a callback to each element
+
+Does NOT mutate the original array
+
+Returns the new transformed array
+
+Keeps the same length as the original array
 
 ```javascript
 const doubled = [1, 2, 3].map(num => num * 2); // [2, 4, 6]
 ```
+❗ Common Mistakes
+✅ Always return the new value from the callback:
+
+```javascript
+// ✅ Correct
+const doubled = [1, 2].map(n => n * 2); // [2, 4]
+
+// ❌ Wrong: No return
+const wrong = [1, 2].map(n => { n * 2 }); // [undefined, undefined]
+```
 ✅ filter()
-Filters items based on condition.
+Creates a new array ✅
+
+Does NOT mutate the original array ❌
 
 ```javascript
-const evens = [1, 2, 3, 4].filter(num => num % 2 === 0); // [2, 4]
+const nums = [1, 2, 3, 4];
+const evens = nums.filter(n => n % 2 === 0);
+console.log(evens); // [2, 4]
+console.log(nums);  // [1, 2, 3, 4] ← original unchanged
 ```
+filter() returns a new array containing only elements that match the condition.
+
 ✅ reduce()
-Reduces array to a single value.
+Does NOT return a new array necessarily 🚫
+
+It returns whatever you explicitly return from the callback (can be a number, object, array, etc.)
+
+It does not mutate the original array
+
+Example: Summing numbers
 
 ```javascript
-const sum = [1, 2, 3].reduce((acc, curr) => acc + curr, 0); // 6
+const nums = [1, 2, 3];
+const total = nums.reduce((acc, n) => acc + n, 0);
+console.log(total); // 6
+Example: Building a new array with reduce
 ```
+
+```javascript
+const nums = [1, 2, 3];
+const doubled = nums.reduce((acc, n) => {
+  acc.push(n * 2);
+  return acc;
+}, []);
+console.log(doubled); // [2, 4, 6]
+```
+So, reduce() can be used to create a new array — but only if you intend to.
+
 ✅ find()
 Returns the first matching element.
-
 ```javascript
 const result = [1, 4, 6].find(num => num > 3); // 4
 ```
