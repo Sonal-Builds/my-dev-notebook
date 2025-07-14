@@ -434,3 +434,14 @@ const debounced = debounce(() => console.log("Typing done..."), 500);
 debounced(); debounced(); debounced(); // Only one log after 500ms
 ```
 ✅ Concepts: Closures with timers and async patterns
+
+## 🧠 Stack vs Heap — Core Concepts
+| Memory Area    | What It Holds                                  | Used For                          |
+| -------------- | ---------------------------------------------- | --------------------------------- |
+| **Call Stack** | Function calls and local variables (temporary) | Execution context (LIFO)          |
+| **Heap**       | Objects, functions, closures                   | Persistent data (reference types) |
+
+🧪 Interview Tip
+If asked "What happens in memory when a closure is created?", you should say:
+
+The inner function forms a closure by keeping a reference to its outer lexical environment. While the outer function's call frame is popped from the call stack, the referenced variables are stored in the heap, ensuring they're not garbage collected. This is how the closure retains access to its outer variables.
