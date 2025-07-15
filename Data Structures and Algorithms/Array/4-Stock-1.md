@@ -1,6 +1,7 @@
 ## Brute Force Approach
 Intuition:
 The outer loop will track the day we are buying the stock and the inner loop will track the day we are selling the stock.
+
 Compute the profit for each pair and keep track of the maximum profit.
 
 ```javascript
@@ -22,6 +23,7 @@ var maxProfit = function(prices) {
 };
 ```
 Time Complexity: O(n^2) - We have to check every pair of days.
+
 Space Complexity: O(1) - We only use a constant amount of space.
 
 ##Optimized One Pass Approach
@@ -29,8 +31,11 @@ This solution attempts to go through the price list just once while keeping trac
 
 Intuition:
 Start by setting minPrice to a very large number which will be updated as we encounter lower prices.
+
 Traverse through each price and at each step update the minPrice if the current price is lower.
+
 Calculate a potential profit at each step by subtracting minPrice from the current price and compare it to maxProfit.
+
 Keep track of the highest profit encountered.
 ```javascript
 var maxProfit = function(prices) {
@@ -54,4 +59,5 @@ var maxProfit = function(prices) {
 };
 ```
 Time Complexity: O(n) - We traverse the list only once.
+
 Space Complexity: O(1) - No extra space is used beyond a few variables.

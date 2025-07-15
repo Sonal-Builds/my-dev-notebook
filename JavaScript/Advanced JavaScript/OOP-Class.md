@@ -169,4 +169,83 @@ Q: Why not just make _name public?
 
 Because direct access gives users full control — they could break app logic by setting invalid data or accessing internals they shouldn’t.
 
+##🔑 What is Inheritance?
+Inheritance is when one object or class inherits the properties and methods of another.
+
+In JavaScript, you can do this using:
+
+Prototype-based Inheritance (traditional)
+
+Class-based Inheritance (ES6+)
+
+##🧱 1. Prototype-based Inheritance (Old way)
+Before classes existed, JavaScript used prototypes to inherit behavior.
+```javascript
+function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.speak = function() {
+  console.log(`${this.name} makes a sound.`);
+};
+
+function Dog(name) {
+  Animal.call(this, name); // inherit properties
+}
+Dog.prototype = Object.create(Animal.prototype); // inherit methods
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = function() {
+  console.log(`${this.name} barks.`);
+};
+
+const dog = new Dog("Buddy");
+dog.speak(); // Buddy makes a sound.
+dog.bark();  // Buddy barks.
+```
+## 🆕 2. Class-based Inheritance (Modern ES6+)
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} makes a sound.`);
+  }
+}
+
+class Dog extends Animal {
+  bark() {
+    console.log(`${this.name} barks.`);
+  }
+}
+
+const dog = new Dog("Rex");
+dog.speak(); // Rex makes a sound.
+dog.bark();  // Rex barks.
+```
+🔄 super() keyword
+Used inside a subclass to call the parent constructor or method.
+
+```javascript
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name); // Calls Animal's constructor
+    this.breed = breed;
+  }
+}
+```
+🧠 Why Use Inheritance?
+DRY: Avoid code duplication
+
+Reusability: Share common logic between classes
+
+Polymorphism: Use parent types and override methods
+
+🚫 Caution!
+Inheritance can become too coupled; prefer composition when possible
+
+JS supports single inheritance only
+
+
+
 
