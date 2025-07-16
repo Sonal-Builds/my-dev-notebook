@@ -1,15 +1,17 @@
 ## 🔸 High-Order Array Methods (🔥 Used in FAANG Interviews)
-🔁 forEach() — Loop through each element of an array
+### 🔁 forEach() — Loop through each element of an array
+
 📌 Key Characteristics:
-Iterates over elements in an array, in order
 
-Executes a callback function for each element
+- Iterates over elements in an array, in order
 
-Does NOT return anything (always returns undefined)
+- Executes a callback function for each element
 
-Does NOT mutate the original array (unless done inside the callback)
+- Does NOT return anything (always returns undefined)
 
-Can’t be break/return/continue-ed like a for loop
+- Does NOT mutate the original array (unless done inside the callback)
+
+- Can’t be break/return/continue-ed like a for loop
 ```javascript
 array.forEach(function(currentValue, index, array) {
   // your code
@@ -33,17 +35,18 @@ array.forEach(function(currentValue, index, array) {
 });
 // Output: 1, 2, 4
 ```
-🗺️ map() — “Transform each element into something new”
+### 🗺️ map() — “Transform each element into something new”
 📌 Key Characteristics:
-Creates a new array
 
-Applies a callback to each element
+- Creates a new array
 
-Does NOT mutate the original array
+- Applies a callback to each element
 
-Returns the new transformed array
+- Does NOT mutate the original array
 
-Keeps the same length as the original array
+- Returns the new transformed array
+
+- Keeps the same length as the original array
 
 ```javascript
 const doubled = [1, 2, 3].map(num => num * 2); // [2, 4, 6]
@@ -58,10 +61,9 @@ const doubled = [1, 2].map(n => n * 2); // [2, 4]
 // ❌ Wrong: No return
 const wrong = [1, 2].map(n => { n * 2 }); // [undefined, undefined]
 ```
-✅ filter()
-Creates a new array ✅
+### ✅ filter()  Creates a new array ✅
 
-Does NOT mutate the original array ❌
+- Does NOT mutate the original array ❌
 
 ```javascript
 const nums = [1, 2, 3, 4];
@@ -71,12 +73,11 @@ console.log(nums);  // [1, 2, 3, 4] ← original unchanged
 ```
 filter() returns a new array containing only elements that match the condition.
 
-✅ reduce()
-Does NOT return a new array necessarily 🚫
+### ✅ reduce() Does NOT return a new array necessarily 🚫
 
-It returns whatever you explicitly return from the callback (can be a number, object, array, etc.)
+- It returns whatever you explicitly return from the callback (can be a number, object, array, etc.)
 
-It does not mutate the original array
+- It does not mutate the original array
 
 Example: Summing numbers
 
@@ -97,34 +98,30 @@ console.log(doubled); // [2, 4, 6]
 ```
 So, reduce() can be used to create a new array — but only if you intend to.
 
-✅ find()
-Returns the first matching element.
+### ✅ find() Returns the first matching element.
 ```javascript
 const result = [1, 4, 6].find(num => num > 3); // 4
 ```
-✅ findIndex()
-Returns index of the first match.
+### ✅ findIndex() Returns index of the first match.
 
 ```javascript
 const index = [5, 12, 8].findIndex(num => num > 10); // 1
 ```
-✅ some() / every()
-some → true if any element passes
-
-every → true if all pass
+### ✅ some() / every() some → true if any element passes. every → true if all pass
 
 ```javascript
 [1, 2, 3].some(num => num > 2);  // true
 [1, 2, 3].every(num => num > 0); // true
 ```
-✅ flat() / flatMap()
+### ✅ flat() / flatMap()
 ```javascript
 [1, [2, [3]]].flat(2); // [1, 2, 3]
 ['a', 'b'].flatMap(x => [x, x]); // ['a', 'a', 'b', 'b']
 ```
 
-✂️ 5. slice() – Copy a part of an array
-Returns a new shallow copy from a start to end index (non-inclusive).
+### ✂️ 5. slice() – Copy a part of an array
+
+- Returns a new shallow copy from a start to end index (non-inclusive).
 
 Does not change the original array.
 ```javascript
@@ -134,7 +131,8 @@ console.log(part); // [2, 3]
 ```
 🔸 Use for copying or extracting parts of an array.
 
-💥 6. splice() – Add/remove items in place
+### 💥 6. splice() – Add/remove items in place
+
 Mutates the original array.
 ```javascript
 const nums = [1, 2, 3, 4];
@@ -143,7 +141,8 @@ console.log(nums); // [1, 4]
 ```
 🔸 Use when you need to insert, remove or replace items in-place.
 
-🔄 7. sort() – Sorts the array in place
+### 🔄 7. sort() – Sorts the array in place
+
 Mutates original array.
 
 Use a comparator for custom logic.
@@ -155,7 +154,8 @@ console.log(nums); // [1, 3, 4]
 ```
 🔸 Use with caution, as it mutates the array.
 
-🔃 8. reverse() – Reverses in place
+### 🔃 8. reverse() – Reverses in place
+
 Mutates original array.
 
 ```javascript
@@ -235,6 +235,7 @@ arr.splice(1, 1, 99);  // Replace index 1
 console.log(arr); // [1, 99, 3]
 ```
 🧠 Interview Use:
+
 Used when modifying in-place is acceptable.
 
 Handy for deleting or inserting elements dynamically.
