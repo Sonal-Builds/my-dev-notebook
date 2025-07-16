@@ -2,7 +2,85 @@
 
 # `this` keyword, `bind()` | `call()` | `apply()`
 
+## 🔍 What is this?
+
 - `this` refers to the **object that is executing the current function**. But… its value depends on **how the function is called**.
+
+
+- `this` refers to the context in which a function is executed. That context determines the value of this.
+
+📌 1. Global Context (Non-strict mode)
+```javascript
+console.log(this); // In browser: `window`
+```
+In the global scope, this refers to the global object (like window in browsers).
+
+📌 2. Inside a Regular Function
+```javascript
+function show() {
+  console.log(this);
+}
+show(); // window (in browsers), or undefined in strict mode
+```
+If not in strict mode, this refers to the global object.
+
+📌 3. Inside an Object Method
+```javascript
+const obj = {
+  name: "JS",
+  greet() {
+    console.log(this.name);
+  }
+};
+obj.greet(); // "JS"
+```
+this refers to the object that owns the method.
+
+📌 4. Arrow Functions
+```javascript
+const obj = {
+  name: "JS",
+  greet: () => {
+    console.log(this.name);
+  }
+};
+obj.greet(); // undefined
+```
+❗ Arrow functions don’t have their own this. They inherit it from their lexical scope.
+
+📌 5. In Constructor Functions
+```javascript
+function Person(name) {
+  this.name = name;
+}
+const p = new Person("Alice");
+console.log(p.name); // Alice
+```
+this refers to the new object created.
+
+📌 6. In Class Methods
+```javascript
+class Car {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    console.log(this.name);
+  }
+}
+const c = new Car("Tesla");
+c.show(); // Tesla
+```
+
+📌 7. With Event Listeners
+```javascript
+document.getElementById("btn").addEventListener("click", function () {
+  console.log(this); // the button element
+});
+```
+In traditional functions, this refers to the DOM element that triggered the event.
+
+In classes, this works as expected: it refers to the instance.
 
 ### 📌 What `this` refers to in different contexts:
 
