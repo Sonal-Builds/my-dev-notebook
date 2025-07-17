@@ -20,23 +20,15 @@ Dispatch – Sends an action to the store to update the state.
 
 # Redux Core - in Plain JavaScript
 
-User clicks "Increment"
+- User clicks "Increment"
 
-      ↓
+- store.dispatch({ type: "INCREMENT" })
 
-store.dispatch({ type: "INCREMENT" })
+- Reducer gets current state, adds 1 to count
 
-      ↓
+- New state is returned → Store updates it
 
-Reducer gets current state, adds 1 to count
-
-      ↓
-
-New state is returned → Store updates it
-
-      ↓
-
-store.subscribe() detects change → Updates UI
+- store.subscribe() detects change → Updates UI
 
 
 ```html
@@ -200,6 +192,7 @@ export default App;
 
 📁 Folder Structure
 
+```bash
 /src
   ├── actions/
   │    ├── counterActions.js
@@ -211,6 +204,7 @@ export default App;
   ├── store.js
   ├── App.js
   └── index.js
+```
 
 ## 📄 1. counterActions.js
 
