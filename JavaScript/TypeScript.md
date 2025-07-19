@@ -201,4 +201,204 @@ let s: Status = "success"; // ✅
 s = "idle";                // ❌ Error
 ```
 
+# 🔁 Function Overloading in TypeScript
+Function overloading in TypeScript lets you define multiple type signatures for the same function — so it can behave differently depending on the input types.
+```typescript
+function combine(a: string, b: string): string;
+function combine(a: number, b: number): number;
+function combine(a: any, b: any): any {
+  return a + b;
+}
 
+combine("Hi ", "there"); // "Hi there"
+combine(10, 20);         // 30
+```
+
+# 🧬 Generics in TypeScript – Explained Simply
+Generics let you write reusable, type-safe code that works with any data type, while still preserving type information.
+✅ Simple definition:
+
+Generics are like variables for types. They allow functions, classes, and types to work with different types without losing type safety.
+
+```typescript
+//🔹 1. Generic Function
+function identity<T>(value: T): T {
+  return value;
+}
+
+identity<string>("hello");  // returns string
+identity<number>(42);       // returns number
+//T is a type variable (like a placeholder for a type)
+
+//Type is inferred automatically if not specified
+const result = identity(true); // T = boolean
+
+//🔹 2. Generic with Arrays
+function firstElement<T>(arr: T[]): T {
+  return arr[0];
+}
+
+firstElement<string>(["a", "b", "c"]); // returns "a"
+
+🔹 3. Generic Type Alias
+type ApiResponse<T> = {
+  data: T;
+  success: boolean;
+};
+
+const userResponse: ApiResponse<{ name: string }> = {
+  data: { name: "Alice" },
+  success: true,
+};
+
+🔹 4. Generic Interface
+interface Box<T> {
+  value: T;
+}
+
+const numberBox: Box<number> = { value: 123 };
+
+🔹 5. Generic Constraints (Limits What T Can Be)
+function logLength<T extends { length: number }>(item: T): void {
+  console.log(item.length);
+}
+
+logLength("hello");         // ✅
+logLength([1, 2, 3]);        // ✅
+logLength(42);               // ❌ Error: number has no length
+
+```
+
+## 🔁 1. Merging with type (using intersections &)
+```typescript
+type Person = {
+  name: string;
+};
+
+type Employee = {
+  id: number;
+};
+
+type Staff = Person & Employee;
+
+const s: Staff = {
+  name: "Alice",
+  id: 101,
+};
+```
+## 🧬 2. Merging with interface (using extends)
+```typescript
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  id: number;
+}
+
+const e: Employee = {
+  name: "Bob",
+  id: 202,
+};
+```
+### 🧠 Bonus: Interface Merging (Declaration Merging)
+```typescript
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+const u: User = {
+  name: "Sam",
+  age: 25,
+};
+
+//TypeScript automatically merges interfaces with the same name
+//type cannot do this — you'd get a duplicate identifier erro
+
+```
+
+# 🧭 enum in TypeScript — Explained Simply
+An enum (short for enumeration) is a special TypeScript feature used to define a set of named constant values. It makes your code more readable, organized, and type-safe when dealing with a fixed set of options.
+```typescript
+// 🔹 1. Numeric Enum (Default)
+enum Direction {
+  Up,      // 0
+  Down,    // 1
+  Left,    // 2
+  Right    // 3
+}
+
+let move: Direction = Direction.Up;
+console.log(move); // 0
+
+//By default, values start at 0 and increment.
+//You can assign custom numbers:
+enum Status {
+  Success = 200,
+  NotFound = 404,
+  ServerError = 500,
+}
+
+
+//🔹 2. String Enum
+enum Size {
+  Small = "S",
+  Medium = "M",
+  Large = "L"
+}
+let shirtSize: Size = Size.Medium;
+
+
+// 🔹 3. Heterogeneous Enum (not recommended)
+enum Mix {
+  No = 0,
+  Yes = "YES"
+}
+
+
+//🔹 4. Enum with Function
+enum Role {
+  Admin,
+  User,
+  Guest
+}
+
+function checkAccess(role: Role) {
+  if (role === Role.Admin) {
+    console.log("Full access");
+  }
+}
+
+//🔹 5. Reverse Mapping (only for numeric enums)
+enum Fruit {
+  Apple = 1,
+  Banana = 2
+}
+
+console.log(Fruit[1]); // "Apple"
+
+```
+## 🔁 Alternatives to enum
+
+```typescript
+type Status = "success" | "error" | "loading";
+✅ Lighter and more readable
+❌ No reverse lookup, no constant representation
+```
+## 🧊 as const in TypeScript — Explained Clearly
+```typescript
+const colors = ["red", "green", "blue"] as const;
+
+//🔹 Use Case: Immutable Object
+const config = {
+  env: "production",
+  debug: false,
+} as const;
+
+```
+
+# 🔑 typeof – Get the Type of a Value - not understood later will check
