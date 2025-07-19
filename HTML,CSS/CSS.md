@@ -92,7 +92,25 @@ div {
 
 The display property defines how an element is rendered on the page — whether it’s a block, inline, flex, grid, etc.
 
-# 🎯 CSS Flexbox: The Ultimate Guide ([text](https://css-tricks.com/snippets/css/a-guide-to-flexbox/))
+## 🔑 Common display Values
+
+| Value                       | Description                                                |
+| --------------------------- | ---------------------------------------------------------- |
+| `block`                     | Takes full width, starts on new line (e.g., `<div>`)       |
+| `inline`                    | Sits inline, only as wide as content (e.g., `<span>`)      |
+| `inline-block`              | Inline but allows width/height & padding/margin            |
+| `none`                      | Removes element from document (hidden, no space taken)     |
+| `flex`                      | Turns element into a flex container                        |
+| `inline-flex`               | Same as `flex` but inline-level                            |
+| `grid`                      | Turns element into a CSS Grid container                    |
+| `inline-grid`               | Same as `grid`, but inline                                 |
+| `table`, `inline-table`     | Mimics table layout like `<table>`                         |
+| `list-item`                 | Renders like a `<li>` with bullets                         |
+| `contents`                  | Makes the element disappear, but its children stay visible |
+| `inherit`/`initial`/`unset` | Inherits or resets to default                              |
+
+
+# 🎯 CSS Flexbox: The Ultimate Guide ([Best Website](https://css-tricks.com/snippets/css/a-guide-to-flexbox/))
 
 - Flexbox is a 1D layout system used to arrange items horizontally or vertically with flexible alignment and spacing.
 
@@ -116,7 +134,7 @@ The display property defines how an element is rendered on the page — whether 
 - Cross Axis → Perpendicular to the main axis
 
 ## 🎛️ Flex Container Properties
-1. flex-direction → Controls flow direction
+- 1. flex-direction → Controls flow direction
 ```css
 .flex-container {
   flex-direction: row | row-reverse | column | column-reverse;
@@ -126,7 +144,7 @@ row (default) → Left to right
 
 column → Top to bottom
 
-2. justify-content → Aligns items along the main axis
+- 2. justify-content → Aligns items along the main axis
 ```css
 .flex-container {
   justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
@@ -136,7 +154,7 @@ space-between → Equal gaps between items
 
 space-around → Equal gaps around items
 
-3. align-items → Aligns items along the cross axis
+- 3. align-items → Aligns items along the cross axis
 ```css
 .flex-container {
   align-items: stretch | flex-start | flex-end | center | baseline;
@@ -146,7 +164,7 @@ center → Vertically centers items
 
 stretch (default) → Fills container height
 
-4. flex-wrap → Controls wrapping
+- 4. flex-wrap → Controls wrapping
 ```css
 .flex-container {
   flex-wrap: nowrap | wrap | wrap-reverse;
@@ -154,38 +172,38 @@ stretch (default) → Fills container height
 ```
 wrap → Items wrap to next line if needed
 
-5. gap → Adds space between items
+- 5. gap → Adds space between items
 ```css
 .flex-container {
   gap: 10px; /* Adds spacing between flex items */
 }
 ```
 ## 💪 Flex Item Properties
-1. flex-grow → Expands item to fill space
+- 1. flex-grow → Expands item to fill space
 ```css
 .item {
   flex-grow: 1; /* Takes available space */
 }
 ```
-2. flex-shrink → Allows item to shrink if needed
+- 2. flex-shrink → Allows item to shrink if needed
 ```css
 .item {
   flex-shrink: 1; /* Default: allows shrinking */
 }
 ```
-3. flex-basis → Sets initial size before growing/shrinking
+- 3. flex-basis → Sets initial size before growing/shrinking
 ```css
 .item {
   flex-basis: 200px; /* Default: auto */
 }
 ```
-4. align-self → Overrides align-items for a single item
+- 4. align-self → Overrides align-items for a single item
 ```css
 .item {
   align-self: flex-start | flex-end | center;
 }
 ```
-5. order → Changes item order
+- 5. order → Changes item order
 ```css
 .item {
   order: 2; /* Higher numbers appear later */
