@@ -145,3 +145,22 @@ function SortedArray(arr) {
 console.log(SortedArray([1,2,3,4,5,6]))
 console.log(SortedArray([6,4,2,5,2,4,5]))
 ```
+
+## Left Rotate the Array by One
+### Optimal Approach
+- Time Complexity: O(N)
+- Space Complexity: O(1)
+```javascript
+function LeftRotate(arr,k) {
+     if(k === 0) return arr
+     let first = arr[0]
+
+     for(i=0; i<arr.length - 1;i++) {
+         arr[i] = arr[i+1]
+     }
+      arr[arr.length - 1] = first
+    return LeftRotate(arr,k-1)
+ }
+
+ console.log(LeftRotate([1,2,3,4,5],2))
+```

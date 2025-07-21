@@ -402,3 +402,308 @@ const config = {
 ```
 
 # 🔑 typeof – Get the Type of a Value - not understood later will check
+
+# 🔧 Most Used TypeScript Utility Types
+```typescript
+// 1. ✅ Partial<Type>
+// Makes all properties optional
+
+type User = { name: string; age: number };
+type PartialUser = Partial<User>; // { name?: string; age?: number }
+
+// 2. ✅ Required<Type>
+// Makes all properties required
+
+type Props = { title?: string };
+type RequiredProps = Required<Props>; // { title: string }
+
+// 3. ✅ Readonly<Type>
+// Makes all properties read-only
+
+type Todo = { id: number; task: string };
+const todo: Readonly<Todo> = { id: 1, task: "Learn TS" };
+todo.task = "Update"; // ❌ Error: Cannot assign to 'task'
+
+// 4. ✅ Pick<Type, Keys>
+// Picks a subset of properties
+
+type User = { id: number; name: string; email: string };
+type BasicInfo = Pick<User, "id" | "name">; // { id: number; name: string }
+
+// 5. ✅ Omit<Type, Keys>
+//  Removes a subset of properties
+
+type User = { id: number; name: string; email: string };
+type NoEmail = Omit<User, "email">; // { id: number; name: string }
+
+// 6. ✅ Record<Keys, Type>
+//Constructs an object type with specified keys and value types
+
+type Theme = "dark" | "light";
+type ThemeColors = Record<Theme, string>; // { dark: string; light: string }
+
+// 7. ✅ Exclude<UnionType, ExcludedMembers>
+// Removes types from a union
+
+type Status = "success" | "error" | "loading";
+type NonError = Exclude<Status, "error">; // "success" | "loading"
+
+// 8. ✅ Extract<Type, Union>
+// Extracts types that are common to both
+
+type A = "a" | "b" | "c";
+type B = "a" | "z";
+type Common = Extract<A, B>; // "a"
+
+// 9. ✅ NonNullable<Type>
+// Removes null and undefined from a type
+
+type Maybe = string | null | undefined;
+type Clean = NonNullable<Maybe>; // string
+
+// 10. ✅ ReturnType<Function>
+// Extracts the return type of a function
+
+function getUser() {
+  return { id: 1, name: "Alice" };
+}
+type UserReturn = ReturnType<typeof getUser>; // { id: number; name: string }
+
+// 11. ✅ Parameters<Function>
+// Extracts the parameter types of a function
+
+function greet(name: string, age: number) {}
+type Args = Parameters<typeof greet>; // [name: string, age: number]
+
+// 12. ✅ Awaited<Type>
+// Gets the resolved type of a Promise
+
+type ApiResponse = Promise<string>;
+type Resolved = Awaited<ApiResponse>; // string
+
+```
+## 📦 Summary Cheat Sheet
+```typescript
+Partial<T>     // Makes all properties optional
+Required<T>    // Makes all properties required
+Readonly<T>    // Makes all properties readonly
+Pick<T, K>     // Pick a subset of keys
+Omit<T, K>     // Omit a subset of keys
+Record<K, T>   // Map keys to a value type
+Exclude<T, U>  // Exclude from union
+Extract<T, U>  // Extract common members
+NonNullable<T> // Remove null and undefined
+ReturnType<T>  // Get return type of function
+Parameters<T>  // Get parameters of function
+Awaited<T>     // Get resolved value of a Promise
+```
+
+# any / unknow / never / void / null
+```typescript
+// 🔹 any
+// ✅ Means: Disable type checking
+// TypeScript gives up. Anything goes.
+
+let value: any = 5;
+value = "hello";  // ✅ No error
+value = {};       // ✅ No error
+❗ Use sparingly – defeats TypeScript's purpose.
+
+// 🔹 unknown
+// ✅ Means: Don't know the type yet (but safer than any)
+// You must check the type before using it.
+
+let value: unknown = "hello";
+value = 10;
+
+// console.log(value.toFixed()); ❌ Error: Object is of type 'unknown'
+if (typeof value === "number") {
+  console.log(value.toFixed()); ✅
+}
+//👍 Use unknown when you don’t know the type yet (e.g., from API).
+
+// 🔹 never
+// ✅ Means: Something that never happens
+// Functions that throw errors or infinite loops.
+
+// Exhaustive checks in switch/case.
+
+function error(message: string): never {
+  throw new Error(message);
+}
+
+function infiniteLoop(): never {
+  while (true) {}
+}
+// ✅ Used in advanced types and exhaustive switch statements.
+
+// 🔹 void
+// ✅ Means: No return value
+// Used in functions that return nothing.
+
+function logMessage(message: string): void {
+  console.log(message);
+}
+// Common in event handlers, logging, etc.
+
+// 🔹 null and undefined
+// ✅ Are values and types in TS
+
+let x: null = null;
+let y: undefined = undefined;
+By default, you must enable strictNullChecks to avoid accidental null/undefined.
+
+// 🧠 Best Practice: Use with | unions
+
+type User = {
+  name: string;
+  email?: string | null;
+};
+```
+
+# 📦 What is tsconfig.json? (https://www.typescriptlang.org/tsconfig/)
+It tells the TypeScript compiler how to compile your code.
+
+When you run tsc, it looks for this file to know:
+
+- What files to include/ignore
+
+- What JavaScript features to output
+
+- Which type rules to follow
+
+### 🔧 Sample tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "target": "ES6",                // Output JS version (ES6, ES2020, etc.)
+    "module": "ESNext",             // Module system (ESNext, CommonJS, etc.)
+    "jsx": "react-jsx",             // For React apps
+    "strict": true,                 // Enable all strict type checks
+    "esModuleInterop": true,       // Import default exports from non-TS modules
+    "skipLibCheck": true,          // Skip type checks in node_modules
+    "forceConsistentCasingInFileNames": true, // Avoid casing issues
+    "moduleResolution": "node",    // How modules are resolved
+    "outDir": "./dist",            // Where compiled JS goes
+    "baseUrl": ".",                // For path aliasing
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
+
+```
+### 🧪 Try It Yourself
+```bash
+npx tsc --init
+```
+
+# React Typescript ToDo
+### instalation
+```bash
+$ npm create vite@latest
+```
+# React + TypeScript
+## 🧠 1. Component Props & Children
+```typescript
+type ButtonProps = {
+  text: string;
+  onClick: () => void;
+};
+
+const Button: React.FC<ButtonProps> = ({ text, onClick }) => (
+  <button onClick={onClick}>{text}</button>
+);
+```
+### ✅ With children
+```typescript
+type CardProps = {
+  children: React.ReactNode;
+};
+
+const Card = ({ children }: CardProps) => <div>{children}</div>;
+
+```
+## 🧱 2. useState with TypeScript
+```typescript
+const [count, setCount] = useState<number>(0);
+const [user, setUser] = useState<User | null>(null);
+```
+## 🧩 3. useRef
+```typescript
+const inputRef = useRef<HTMLInputElement>(null);
+```
+## 🎯 4. useEffect
+```typescript
+useEffect(() => {
+  // Side effect
+}, []);
+```
+## ⚙️ 5. Event Handling
+```typescript
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(e.target.value);
+};
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+};
+```
+## 🔁 6. Passing State and Setters
+```typescript
+type Props = {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+};
+```
+## 📄 7. Custom Types & Interfaces
+```typescript
+type User = {
+  name: string;
+  age: number;
+};
+
+interface Product {
+  id: string;
+  price: number;
+}
+```
+## 🎛️ 8. Union & Optional Types
+```typescript
+type Status = "idle" | "loading" | "error";
+
+type Props = {
+  size?: "sm" | "md" | "lg";
+};
+```
+## 🔢 9. Generics in Components
+```typescript
+type ListProps<T> = {
+  items: T[];
+  render: (item: T) => JSX.Element;
+};
+
+function List<T>({ items, render }: ListProps<T>) {
+  return <ul>{items.map(render)}</ul>;
+}
+```
+## 🏗️ 10. Type Utilities
+```typescript
+Partial<T>, Pick<T, K>, Omit<T, K>, Record<K, T>, ReturnType<T>
+```
+## 🧩 11. Context API with TypeScript
+```typescript
+type ThemeContextType = { theme: string; toggleTheme: () => void };
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+```
+## 🧰 12. Custom Hooks
+```typescript
+function useCounter(initial: number = 0): [number, () => void] {
+  const [count, setCount] = useState(initial);
+  const increment = () => setCount((c) => c + 1);
+  return [count, increment];
+}
+```
