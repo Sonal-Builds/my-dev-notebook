@@ -1,5 +1,6 @@
-# React Query 
+# React Query or TanStack Query
 ## A powerful library for data fetching, caching, syncing, and updating server state in React apps.
+### 🔁 React Query was officially renamed to: TanStack Query
 
 ## 🧠 Why Use React Query?
 React Query:
