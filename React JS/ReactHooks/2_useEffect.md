@@ -1,7 +1,6 @@
 
-1. [Side Effects Master Example (React)](#⚡ Side Effects Master Example (React))
-1. [Brute Force Approach](#brute-force-approach)
-1. [Brute Force Approach](#brute-force-approach)
+1. [Advanced Interview Questions](#advanced-interview-questions)
+2. [Advanced / FAANG-Level React Hooks Q&A](#-advanced--faang-level-react-hooks-qa)
 # useEffect Hook
 
 `useEffect` is a **React Hook** that lets you perform **side effects** in function components — such as:
@@ -611,3 +610,40 @@ useEffect(() => {
 Both updates are batched → component re-renders only once.
 
 📌 Before React 18, batching only happened in event handlers, not async code.
+
+11. What’s the difference between storing something in useRef vs useState in terms of re-renders?
+
+✅ Answer:
+
+useState → triggers re-render when updated.
+
+useRef → persists value across renders but updating it does not cause re-render.
+
+Use case:
+
+useRef → store mutable values (e.g., DOM nodes, timers, previous values).
+
+useState → UI-related state that should re-render.
+
+12. How would you write a custom hook for syncing state to localStorage?
+
+✅ Answer:
+```jsx
+import { useState, useEffect } from "react";
+
+function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() => {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : initialValue;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue];
+}
+
+// Usage
+const [theme, setTheme] = useLocalStorage("theme", "light");
+```
