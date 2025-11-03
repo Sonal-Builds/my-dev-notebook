@@ -196,13 +196,12 @@ Q3. Can we make useEffect async?
 Not directly.
 
 Correct way:
-
+```jsx
 useEffect(() => {
   const fetchData = async () => { ... };
   fetchData();
 }, []);
-
-
+```
 Q4. When does cleanup run?
 
 Before component unmount.
@@ -225,7 +224,7 @@ useState → best for simple state (booleans, numbers, strings).
 useReducer → best for complex state logic with multiple transitions, often involving objects/arrays.
 
 useReducer centralizes state transitions using a reducer function.
-
+```jsx
 // useState
 const [count, setCount] = useState(0);
 
@@ -237,7 +236,7 @@ function reducer(state, action) {
   }
 }
 const [state, dispatch] = useReducer(reducer, { count: 0 });
-
+```
 2️⃣ Can you use hooks inside loops or conditions? Why not?
 
 ❌ No. Hooks must run in the same order every render.
@@ -281,6 +280,7 @@ useLayoutEffect → sync, before paint (blocks UI until done).
 useInsertionEffect → runs before DOM mutations (used mostly by CSS-in-JS libs).
 
 7️⃣ How would you implement debouncing or throttling inside a useEffect?
+```jsx
 useEffect(() => {
   const handler = setTimeout(() => {
     console.log("Debounced search:", query);
@@ -288,23 +288,23 @@ useEffect(() => {
 
   return () => clearTimeout(handler); // cleanup
 }, [query]);
-
+```
 8️⃣ How do you persist values between renders without causing re-renders?
 
 useRef persists values without re-renders.
 
 useState causes re-render when updated.
-
+```jsx
 const countRef = useRef(0); // persists, no re-render
 const [count, setCount] = useState(0); // re-renders
-
+```
 9️⃣ How would you memoize expensive computations inside hooks?
 
 Use useMemo or lazy init in useState.
-
+```jsx
 const value = useMemo(() => expensiveCalc(data), [data]);
 const [state] = useState(() => expensiveInit());
-
+```
 🔟 How does React ensure cleanup functions are called properly on component unmount?
 
 React calls the returned cleanup function from useEffect during unmount.
@@ -326,7 +326,7 @@ Use proper dependency arrays and memoization for functions/objects.
 1️⃣3️⃣ When should you use custom hooks? Example?
 
 When logic is reused across components (data fetching, localStorage, event listeners).
-
+```jsx
 function useLocalStorage(key, initial) {
   const [value, setValue] = useState(() => 
     JSON.parse(localStorage.getItem(key)) || initial
@@ -334,7 +334,7 @@ function useLocalStorage(key, initial) {
   useEffect(() => localStorage.setItem(key, JSON.stringify(value)), [key, value]);
   return [value, setValue];
 }
-
+```
 1️⃣4️⃣ What are the pitfalls of using useEffect for data fetching in concurrent React (React 18)?
 
 Effects may run multiple times (Strict Mode).
@@ -354,11 +354,12 @@ Example: setA(1); setB(2); inside same effect → only 1 re-render.
 They run in the order they are defined in the component.
 
 1️⃣7️⃣ How would you implement a setInterval inside useEffect without stale state?
+```jsx
 useEffect(() => {
   const id = setInterval(() => setCount(prev => prev + 1), 1000);
   return () => clearInterval(id);
 }, []);
-
+```
 1️⃣8️⃣ What’s the difference between using useEffect and useCallback for event handlers?
 
 useEffect → runs side effects (attach/remove listeners).
@@ -409,20 +410,19 @@ exhaustive-deps → warns if dependencies are missing in useEffect, preventing s
 
 useEffect
 Runs after the paint is committed to the screen. Non-blocking. Best for data fetching, subscriptions, logging.
-
+```jsx
 useEffect(() => {
   console.log("Runs after paint");
 }, []);
-
-
+```
 useLayoutEffect
 Runs synchronously after DOM mutations but before the browser paints. Blocks rendering. Useful for DOM measurements or synchronizing layout.
-
+```jsx
 useLayoutEffect(() => {
   const rect = divRef.current.getBoundingClientRect();
   console.log("DOM size:", rect);
 }, []);
-
+```
 
 useInsertionEffect
 Runs before DOM mutations are applied. Mostly used by styling libraries (e.g., styled-components) to inject CSS before render to avoid flicker. Rare in normal apps.
@@ -436,9 +436,8 @@ useLayoutEffect → layout sync (measure DOM, scroll)
 useInsertionEffect → CSS-in-JS libraries
 
 2. How would you implement debouncing or throttling inside a useEffect?
-
-✅ Debounce Example (search API call only after user stops typing):
-
+```jsx
+// ✅ Debounce Example (search API call only after user stops typing):
 const [query, setQuery] = useState("");
 useEffect(() => {
   const handler = setTimeout(() => {
@@ -451,7 +450,7 @@ useEffect(() => {
 }, [query]);
 
 
-✅ Throttle Example (API call every 1s max):
+// ✅ Throttle Example (API call every 1s max):
 
 useEffect(() => {
   let lastCall = 0;
@@ -465,7 +464,7 @@ useEffect(() => {
 
   return () => clearInterval(interval);
 }, []);
-
+```
 3. How do you persist values between renders without causing re-renders? (useRef vs useState)
 
 useState → persists values and triggers re-renders.
@@ -473,7 +472,7 @@ useState → persists values and triggers re-renders.
 useRef → persists values without re-renders.
 
 Example:
-
+```jsx
 const [count, setCount] = useState(0); // re-renders UI when changed
 const renderCount = useRef(0);         // persists silently
 
@@ -483,13 +482,13 @@ useEffect(() => {
 
 console.log("Re-render count:", renderCount.current);
 
-
+```
 📌 Use useRef for values like timers, DOM refs, previous state, mutable values.
 
 4. How would you memoize expensive computations inside hooks? (useMemo + lazy init in useState)
 
 useMemo Example:
-
+```jsx
 const expensiveValue = useMemo(() => {
   console.log("Calculating...");
   return heavyCalculation(data);
@@ -499,7 +498,7 @@ const expensiveValue = useMemo(() => {
 Lazy init in useState:
 
 const [value] = useState(() => heavyCalculation(initialData));
-
+```
 
 📌 useMemo recalculates when dependencies change.
 📌 Lazy init in useState runs only once on mount.
@@ -511,13 +510,12 @@ useEffect can return a cleanup function.
 React ensures cleanup runs before next effect run or when component unmounts.
 
 Example:
-
+```jsx
 useEffect(() => {
   const id = setInterval(() => console.log("running"), 1000);
   return () => clearInterval(id); // cleanup
 }, []);
-
-
+```
 📌 Guarantee: Cleanup prevents memory leaks (timers, event listeners, subscriptions).
 
 6. Why do we need to add dependencies in useEffect? What happens if you leave them out?
@@ -529,22 +527,22 @@ Missing dependencies → stale data or bugs.
 Extra dependencies → unnecessary re-renders.
 
 Example:
-
+```jsx
 useEffect(() => {
   console.log(user.name); 
 }, [user.name]); // rerun only when user.name changes
-
+```
 
 📌 ESLint react-hooks/exhaustive-deps helps enforce correctness.
 
 7. How do you avoid infinite loops in useEffect?
 
 Common cause:
-
+```jsx
 useEffect(() => {
   setState(value + 1); // ❌ updates state → triggers effect again
 });
-
+```
 
 ✅ Fix:
 
@@ -553,17 +551,17 @@ Add dependency array.
 Use functional updates.
 
 Ensure side effects don’t directly update state without condition.
-
+```jsx
 useEffect(() => {
   setCount(c => c + 1);
 }, []); // runs once
-
+```
 8. When should you use custom hooks? Can you give an example from your projects?
 
 Use custom hooks when logic is reusable across multiple components.
 
 Example: Fetching data, syncing with localStorage, listening to window size.
-
+```jsx
 function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => 
     JSON.parse(localStorage.getItem(key)) || initialValue
@@ -575,7 +573,7 @@ function useLocalStorage(key, initialValue) {
 
   return [value, setValue];
 }
-
+```
 
 Usage:
 
@@ -600,12 +598,12 @@ Or use libraries like React Query / SWR that handle concurrency.
 React batches multiple state updates into one re-render (in React 18, even in async code).
 
 Example:
-
+```jsx
 useEffect(() => {
   setCount(c => c + 1);
   setFlag(true);
 }, []);
-
+```
 
 Both updates are batched → component re-renders only once.
 

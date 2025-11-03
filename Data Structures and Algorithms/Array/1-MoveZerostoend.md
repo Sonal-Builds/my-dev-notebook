@@ -1,4 +1,4 @@
-# [LeetCode 283: Move Zeroes](https://leetcode.com/problems/move-zeroes/)
+# 1 [LeetCode 283: Move Zeroes](https://leetcode.com/problems/move-zeroes/)
 
 ## Approaches
 1. [Brute Force Approach](#brute-force-approach)
