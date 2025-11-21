@@ -1,15 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import AutoComplete from './components/AutoComplete/AutoComplete'
-
+import Counter from './components/counter/Counter'
+import FormValidation from './components/form-validation/Formvalidation'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <AutoComplete />
+    <FormValidation />
     </>
   )
 }
