@@ -19,6 +19,7 @@ function Fibonacci(n) {
 }
 
 console.log(Fibonacci(7))
+// Big-O = O(n)
 
 ```
 
@@ -34,10 +35,11 @@ function factorial(n) {
 }
 
 console.log(factorial(3))
+// Big-O = O(n)
 
 ```
 
-### Prime Number
+### <span style="color: blue;">Prime Number</span>
 - A prime number is a natural number greater than 1 that has no divisors other than 1 and itself.
 
 ```javascript
@@ -55,5 +57,25 @@ function isPrime(n) {
 console.log(isPrime(1)) // false
 console.log(isPrime(5)) // true
 console.log(isPrime(4)) // false
+// Big-O = O(n)
+
+```
+#### <span style="color: gray;">Optimised Solution</span>
+```javascript
+function isPrime(n) {
+    if(n < 2) return false;
+
+    for(let i = 2; i <= Math.sqrt(n); i++) {
+        if(n % i === 0) {
+            return false;
+        }
+    }
+    return true
+}
+
+console.log(isPrime(1)) // false
+console.log(isPrime(5)) // true
+console.log(isPrime(4)) // false
+// Big-O = O(sqrt(n))
 
 ```
